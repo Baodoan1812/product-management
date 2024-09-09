@@ -42,4 +42,21 @@ if(searchInput)
 })
 }
 
+// pagination
+const buttonPagination= document.querySelectorAll("[button-pagination]");
+if(buttonPagination)
+{
+    buttonPagination.forEach(item=>{
+        let url=new URL(window.location.href)
+        item.addEventListener("click",()=>{
+            const page= item.getAttribute("button-pagination");
+            if(page)
+            {
+                url.searchParams.set("page",page);
+            }
+        window.location.href=url.href;
+        })
+    })
+}
+
 

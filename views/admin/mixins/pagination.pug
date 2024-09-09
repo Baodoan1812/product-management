@@ -1,0 +1,21 @@
+mixin pagination(objectPagination)
+    nav 
+        ul(class="pagination")
+            li(class="page-item")
+                button(
+                    class="page-link"
+                    button-pagination=1
+                    ) Trang đầu
+            - for(var i=objectPagination.currentPage-1;i<=objectPagination.currentPage+1;i++)
+                if(i>0 && i<=objectPagination.totalPage)
+                    li(
+                        class=`page-item ${(objectPagination.currentPage == i) ? "active" : ""} `
+                        button-pagination=i
+                        )
+                        button(class="page-link") #{i}
+            li(
+                class="page-item"
+                button-pagination=objectPagination.totalPage
+                )
+                button(class="page-link") Trang cuối
+            
