@@ -59,3 +59,18 @@ if(formChangeMulti){
     formChangeMulti.submit();
     }) 
 }
+
+//delete Item
+const listButtonDelete=document.querySelectorAll("[delete-button]");
+const formDelete=document.querySelector("#form-delete")
+if(formDelete){
+    listButtonDelete.forEach(item=>{
+        item.addEventListener("click",()=>{
+            const id =item.getAttribute("data-id");
+            const path=formDelete.getAttribute("data-path");
+            const action=path+`/${id}?_method=DELETE`
+            formDelete.action=action;
+            formDelete.submit();
+        })
+    })
+}

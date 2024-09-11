@@ -61,9 +61,18 @@ module.exports.changeMulti=async (req,res)=>{
         case "inactive":
             await Product.updateMany({_id:ids},{status:"inactive"})
             break;
-            break;
+        case "delete-multi":
+            await Product.updateMany({_id:ids},{deleted:true});
+        
         default:
             break;
     }
     res.redirect("back")
+}
+
+//delete item
+module.exports.deleteItem= async (req,res)=>{
+    const id=req.params.id;
+    await Product.updateOne({_id:id},{deleted:true});
+    res.redirect("back");
 }
