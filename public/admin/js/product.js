@@ -46,17 +46,27 @@ if(checkboxMulti){
 const formChangeMulti=document.querySelector("[form-change-multi]");
 if(formChangeMulti){
     formChangeMulti.addEventListener("submit",(e)=>{
-        e.preventDefault();
+    e.preventDefault();
     const checkboxMulti=document.querySelector("[checkbox-multi]");
     const inputsChecked=checkboxMulti.querySelectorAll("input[name='id']:checked");
-    let ids=[];
+    
+    if(inputsChecked.length>0){
+        let ids=[];
     inputsChecked.forEach(item=>{
         const id=item.value;
-        ids.push(id);
+        if(e.target.elements.type.value=="change-multi-position")
+            {
+                const position=item.closest("tr").querySelector("[name='position']").value
+                ids.push(`${id}-${position}`);
+            }
+            else{
+                ids.push(id);
+            }
     })
     const inputIds=formChangeMulti.querySelector("input[name='ids']");
     inputIds.value=ids.join(", ");
     formChangeMulti.submit();
+    }
     }) 
 }
 
@@ -72,5 +82,19 @@ if(formDelete){
             formDelete.action=action;
             formDelete.submit();
         })
+    })
+}
+
+
+//show-alert
+const showAlert=document.querySelector("[show-alert]");
+if(showAlert){
+    closeAlert=showAlert.querySelector("[close-alert]");
+    const time=parseInt(showAlert.getAttribute("data-time"));
+    setTimeout(()=>{
+        showAlert.classList.add("alert-hidden");
+    },time)
+    closeAlert.addEventListener("click",()=>{
+        showAlert.classList.add("alert-hidden")
     })
 }

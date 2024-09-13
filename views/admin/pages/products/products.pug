@@ -2,9 +2,12 @@ extends ../../layouts/default.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
-block main 
-    h1 Danh sach san pham
+include ../../mixins/alert.pug
 
+block main 
+    +success(5000)
+        
+    h1 Danh sach san pham
     .card.mb-3 
         .card-header Bộ lọc và Tìm kiếm 
         .card-body
@@ -18,25 +21,33 @@ block main
     .card.mb-3 
         .card-header Danh sách 
         .card-body
-            form(
-                action=`${prefixAdmin}/products/change-multi?_method=PATCH`
-                method="POST"
-                form-change-multi
-                )
-                .d-flex.align-items-start 
-                    .form-group 
-                        select(name="type" class="form-control")
-                            option(value="active") Hoạt động 
-                            option(value="inactive") Dừng hoạt động
-                            option(value="delete-multi") Xóa sản phẩm 
-                    .form-group 
-                        input(
-                            type="text"
-                            name="ids"
-                            value=""
-                            class="form-control d-none"
-                            )             
-                    button(type="submit" class="btn btn-primary") Áp dụng 
+            .row 
+                .col-8
+                    form(
+                        action=`${prefixAdmin}/products/change-multi?_method=PATCH`
+                        method="POST"
+                        form-change-multi
+                        )
+                        .d-flex.align-items-start 
+                            .form-group 
+                                select(name="type" class="form-control")
+                                    option(value="active") Hoạt động 
+                                    option(value="inactive") Dừng hoạt động
+                                    option(value="delete-multi") Xóa sản phẩm
+                                    option(value="change-multi-position") Thay đổi vị trí  
+                            .form-group 
+                                input(
+                                    type="text"
+                                    name="ids"
+                                    value=""
+                                    class="form-control d-none"
+                                    )             
+                            button(type="submit" class="btn btn-primary") Áp dụng 
+                .col-4 
+                    a(
+                        href=`${prefixAdmin}/products/create`
+                        class="btn btn-outline-success"
+                        ) + Thêm mới
             table(
                 class="table table-hover table-sm"
                 checkbox-multi
@@ -49,6 +60,7 @@ block main
                         th Hinh anh 
                         th Tieu de 
                         th Gia 
+                        th Vi tri
                         th Trang thai 
                         th Hanh dong 
                 
@@ -69,6 +81,14 @@ block main
                             height="auto")
                         td #{item.title}
                         td #{item.price}$
+                        td 
+                            input(
+                                type="number"
+                                value=item.position 
+                                style="width:60px"
+                                min="1"
+                                name="position"
+                                )
                         td
                             if(item.status==="active")
                                 a(
