@@ -107,10 +107,15 @@ block main
                                     data-id=item.id
                                     class="badge badge-danger"
                                     ) Dung hoat dong
-                        td 
+                        td  
+                            a(
+                                href=`${prefixAdmin}/products/detail/${item.id}`
+                                class="btn btn-secondary btn-sm"
+                                edit-button
+                                ) Chi tiet 
                             a(
                                 href=`${prefixAdmin}/products/edit/${item.id}`
-                                class="btn btn-warning btn-sm"
+                                class="btn btn-warning btn-sm ml-1"
                                 edit-button
                                 ) Sua 
                             button(

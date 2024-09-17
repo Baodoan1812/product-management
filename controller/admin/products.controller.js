@@ -122,7 +122,6 @@ module.exports.edit= async(req,res)=>{
             _id:req.params.id
         }
         const product= await Product.findOne(find);
-        console.log(product);
         res.render("./admin/pages/products/edit",{
             pageTitle:"Trang chinh sua",
             product:product
@@ -144,4 +143,16 @@ module.exports.editPatch=async(req,res)=>{
    
     await Product.updateOne({_id:id},req.body);
     res.redirect("/admin/products")
+}
+module.exports.detail=async(req,res)=>{
+    const id=req.params.id;
+    let find={
+        deleted:false,
+        _id:id
+    }
+    const product= await Product.findOne(find);
+    res.render("./admin/pages/products/detail",{
+        pageTitle:"Trang chi tiet san pham",
+        product:product
+    });
 }
