@@ -16,18 +16,21 @@ module.exports.product = async (req,res)=>{
 }
 
 module.exports.detail= async(req,res)=>{
-    try {
         const slug=req.params.slug;
-    let find={
-        deleted:false,
-        slug:slug
-    }
-    const product= await Product.findOne(find);
-    res.render("./client/pages/products/detail",{
-        pageTitle:"Trang chi tiet",
-        product:product
-    })
-    } catch (error) {
-        res.redirect("/products");
-    }
+        let find={
+            deleted:false,
+            slug:slug
+        }
+        const product= await Product.findOne(find);
+        if(product)
+        {
+            res.render("./client/pages/products/detail",{
+                pageTitle:"Trang chi tiet",
+                product:product
+            })
+        }
+        else{
+            res.redirect("/products");
+        }
+ 
 }
