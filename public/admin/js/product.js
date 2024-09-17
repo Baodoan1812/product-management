@@ -1,5 +1,6 @@
 // chang-status
 const buttonChangeStatus=document.querySelectorAll("[button-change-status]")
+// console.log(buttonChangeStatus);
 if(buttonChangeStatus)
 {
     const formChangeStatus=document.querySelector("#form-change-status");
@@ -86,15 +87,3 @@ if(formDelete){
 }
 
 
-//show-alert
-const showAlert=document.querySelector("[show-alert]");
-if(showAlert){
-    closeAlert=showAlert.querySelector("[close-alert]");
-    const time=parseInt(showAlert.getAttribute("data-time"));
-    setTimeout(()=>{
-        showAlert.classList.add("alert-hidden");
-    },time)
-    closeAlert.addEventListener("click",()=>{
-        showAlert.classList.add("alert-hidden")
-    })
-}

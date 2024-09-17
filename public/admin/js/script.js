@@ -59,4 +59,28 @@ if(buttonPagination)
     })
 }
 
+//show-alert
+const showAlert=document.querySelector("[show-alert]");
+if(showAlert){
+    closeAlert=showAlert.querySelector("[close-alert]");
+    const time=parseInt(showAlert.getAttribute("data-time"));
+    setTimeout(()=>{
+        showAlert.classList.add("alert-hidden");
+    },time)
+    closeAlert.addEventListener("click",()=>{
+        showAlert.classList.add("alert-hidden")
+    })
+}
+// preview image
+
+const uploadInputImage= document.querySelector("[upload-image-input]");
+const uploadImagePreview= document.querySelector("[upload-image-preview]")
+uploadInputImage.addEventListener("change",(e)=>{
+    const file=e.target.files[0];
+    console.log(file);
+    if(file){
+        uploadImagePreview.src = URL.createObjectURL(file)
+    }
+})
+
 

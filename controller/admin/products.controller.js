@@ -106,9 +106,42 @@ module.exports.createItem= async(req,res)=>{
     else{
         req.body.position=parseInt(req.body.position);
     }
-    req.body.thumbnail=`/uploads/${req.file.filename}`;
+    if(req.file){
+        req.body.thumbnail=`/uploads/${req.file.filename}`;
+    }
+   
     const product=new Product(req.body);
     await product.save();
     res.redirect("/admin/products")
     
+}
+module.exports.edit= async(req,res)=>{
+   try {
+        let find={
+            deleted:false,
+            _id:req.params.id
+        }
+        const product= await Product.findOne(find);
+        console.log(product);
+        res.render("./admin/pages/products/edit",{
+            pageTitle:"Trang chinh sua",
+            product:product
+        });
+   } catch (error) {
+    req.flash("error","chinh sua that bai")
+    res.redirect("/admin/products");
+   }
+}
+module.exports.editPatch=async(req,res)=>{
+    const id=req.params.id;
+    req.body.price=parseInt(req.body.price);
+    req.body.discountPercentage=parseInt(req.body.discountPercentage);
+    req.body.stock=parseInt(req.body.stock);
+    req.body.position=parseInt(req.body.position);
+    if(req.file){
+        req.body.thumbnail=`/uploads/${req.file.filename}`;
+    }
+   
+    await Product.updateOne({_id:id},req.body);
+    res.redirect("/admin/products")
 }
