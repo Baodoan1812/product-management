@@ -77,7 +77,7 @@ if(showAlert){
 const sort=document.querySelector("[sort]");
 if(sort){
     let url= new URL(window.location.href);
-    const sortSelect=document.querySelector("[sort-select]");
+    const sortSelect=sort.querySelector("[sort-select]");
     sortSelect.addEventListener("change",(e)=>{
         const [sortKey,sortValue]= e.target.value.split("-");
 
