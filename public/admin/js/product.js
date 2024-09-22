@@ -85,5 +85,15 @@ if(formDelete){
         })
     })
 }
+// preview image
+const uploadInputImage= document.querySelector("[upload-image-input]");
+const uploadImagePreview= document.querySelector("[upload-image-preview]")
+uploadInputImage.addEventListener("change",(e)=>{
+    const file=e.target.files[0];
+    if(file){
+        uploadImagePreview.src = URL.createObjectURL(file)
+    }
+})
+
 
 

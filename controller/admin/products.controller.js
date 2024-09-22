@@ -33,8 +33,18 @@ module.exports.index= async (req, res) => {
         totalItem
     )
     
-
-    const products = await Product.find(find).limit(objectPagination.limitItem).skip(objectPagination.skipIndex).sort({position:"desc"});
+    let sort={
+        position:"desc"
+    }
+    const sortKey=req.query.sortKey;
+    const sortValue=req.query.sortValue;
+    if(sortKey && sortValue)
+    {
+        delete sort.position;
+        sort[`${sortKey}`]=sortValue;
+    }
+    const products = await Product.find(find).limit(objectPagination.limitItem).skip(objectPagination.skipIndex)
+    .sort(sort);
     
     
     res.render("./admin/pages/products/products.pug",{

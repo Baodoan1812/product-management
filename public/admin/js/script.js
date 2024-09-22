@@ -71,16 +71,34 @@ if(showAlert){
         showAlert.classList.add("alert-hidden")
     })
 }
-// preview image
 
-const uploadInputImage= document.querySelector("[upload-image-input]");
-const uploadImagePreview= document.querySelector("[upload-image-preview]")
-uploadInputImage.addEventListener("change",(e)=>{
-    const file=e.target.files[0];
-    console.log(file);
-    if(file){
-        uploadImagePreview.src = URL.createObjectURL(file)
-    }
-})
+
+// sắp xếp
+const sort=document.querySelector("[sort]");
+if(sort){
+    let url= new URL(window.location.href);
+    const sortSelect=document.querySelector("[sort-select]");
+    sortSelect.addEventListener("change",(e)=>{
+        const [sortKey,sortValue]= e.target.value.split("-");
+
+        if(sortKey && sortValue){
+            url.searchParams.set("sortKey",sortKey);
+            url.searchParams.set("sortValue",sortValue);
+        }
+        else{
+            url.searchParams.delete("sortKey");
+            url.searchParams.delete("sortValue");
+        }
+        window.location.href=url.href;
+    })
+    let stringSort;
+    const sortKey=url.searchParams.get("sortKey");
+    const sortValue=url.searchParams.get("sortValue");
+    stringSort=`${sortKey}-${sortValue}`;
+    const selectOption=sortSelect.querySelector(`option[value='${stringSort}']`);
+    selectOption.selected=true;
+}
+
+
 
 
