@@ -1,0 +1,33 @@
+extends ../../layouts/default.pug
+
+block main 
+    if(record.title)
+        h1(class="mb-4") #{record.title}
+
+    if(record.thumbnail)
+        div(class="mb-4")
+            img(src=record.thumbnail
+                style="width: 100px")
+    
+    if(record.status)
+        div(class="mb-4")
+            span Trang thai: 
+            if(record.status=="active")
+                span(class="badge badge-success") Hoat dong 
+            else   
+                span(class="badge badge-danger") Dung hoat dong 
+    if(record.position)
+        div(class="mb-4") Vi tri: <b> #{record.position}</b>
+    if(record.description)
+        div(class="mb-4") !{record.description}
+    
+    a(
+    href=`${prefixAdmin}/product-category/edit/${record.id}`
+    class="btn btn-warning btn-sm ml-1"
+    edit-button
+    ) Chỉnh sửa
+    script(src="/admin/js/product.js")         
+
+
+
+    

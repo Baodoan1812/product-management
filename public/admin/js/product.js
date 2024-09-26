@@ -4,6 +4,7 @@ const buttonChangeStatus=document.querySelectorAll("[button-change-status]")
 if(buttonChangeStatus)
 {
     const formChangeStatus=document.querySelector("#form-change-status");
+    if( formChangeStatus){
     const path=formChangeStatus.getAttribute("data-path");
     buttonChangeStatus.forEach(item=>{
         item.addEventListener("click",()=>{
@@ -16,6 +17,7 @@ if(buttonChangeStatus)
         })
         
     })
+}
 }
 
 // chang-multi-status

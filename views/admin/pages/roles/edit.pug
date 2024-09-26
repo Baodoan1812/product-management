@@ -1,0 +1,38 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main 
+    +error(5000)
+
+    h1(class="mb-4") Chỉnh sửa sản phẩm 
+
+    form(
+        action=`${prefixAdmin}/roles/edit/${record.id}?_method=PATCH`
+        id='form-edit-product'
+        method="POST"
+        enctype="multipart/form-data"
+        )
+        div(class="form-group")
+            label(for="title") Tiêu đề
+            input(
+                type="text"
+                class ="form-control"
+                id="title"
+                name="title"
+                value=record.title
+                required
+                )
+        div(class="form-group")
+            label(for="desc") Mô tả
+            textarea(
+                class="form-control"
+                id="desc"
+                name="description"
+                rows="5"
+                ) !{record.description}
+        div(class="form-group")
+            button(
+                type="submit"
+                class="btn btn-primary"
+            )  Cập nhật 
+    script(src="/admin/js/product.js")         

@@ -1,6 +1,8 @@
 const mongoose= require("mongoose");
 const Product = require("../../models/products.model");
+const ProductCategory = require("../../models/category-product.model");
 const { query } = require("express");
+const createTreeHelper= require("../../helpers/createTree");
 const filterStatusHelper=require("../../helpers/filter-status");
 const searchHelper=require("../../helpers/search");
 const paginationHelper=require("../../helpers/pagination");
@@ -100,8 +102,15 @@ module.exports.deleteItem= async (req,res)=>{
 }
 // create product
 module.exports.create= async(req,res)=>{
+    let find={
+        deleted:false
+    }
+    
+    const records= await ProductCategory.find(find);
+    const newRecords=createTreeHelper.treeCreate(records);
     res.render("./admin/pages/products/create",{
-        pageTitle: "Trang tao moi sp"
+        pageTitle: "Trang tao moi sp",
+        records:newRecords
     });
 }
 module.exports.createItem= async(req,res)=>{
@@ -129,9 +138,16 @@ module.exports.edit= async(req,res)=>{
             _id:req.params.id
         }
         const product= await Product.findOne(find);
+        let find1={
+            deleted:false
+        }
+        
+        const records= await ProductCategory.find(find1);
+        const newRecords=createTreeHelper.treeCreate(records);
         res.render("./admin/pages/products/edit",{
             pageTitle:"Trang chinh sua",
-            product:product
+            product:product,
+            records:newRecords
         });
    } catch (error) {
     req.flash("error","chinh sua that bai")

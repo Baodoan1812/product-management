@@ -1,0 +1,18 @@
+extends ../../layouts/default.pug
+
+block main 
+    if(product.title)
+        h1(class="mb-4")  #{product.title}
+    if(product.description)
+        div(class="mb-4") !{product.description}
+    
+    a(
+    href=`${prefixAdmin}/roles/edit/${product.id}`
+    class="btn btn-warning btn-sm ml-1"
+    edit-button
+    ) Chỉnh sửa
+    script(src="/admin/js/product.js")         
+
+
+
+    
