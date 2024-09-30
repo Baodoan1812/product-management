@@ -1,0 +1,93 @@
+extends ../../layouts/default.pug
+
+block main
+    h1(class="mb-4") Phan quyen
+    if(records)
+        div(data-records= records)
+    div(class="text-right")
+        button(
+            type="submit"
+            class="btn btn-primary mb-3"
+            button-submit
+        ) Cap nhat 
+    
+    table(
+        class="table table-hover table-sm"
+        table-permissions
+    )
+        thead 
+            tr 
+                th Tinh nang
+                each item in records 
+                    th(class="text-center") #{item.title}
+        
+        tbody
+            tr(data-name="id")
+                td 
+                    each item in records 
+                        td(class="text-center")
+                            input(type="text" value=item.id)
+            tr 
+                td(colspan="4")
+                    b Danh muc san pham 
+            tr(data-name="product-category_views")
+                td Xem
+                each item in records  
+                    td(class="text-center")
+                        input(type="checkbox")
+            tr(data-name="product-category_create")
+                td Them moi 
+                each item in records  
+                    td(class="text-center")
+                        input(type="checkbox")
+            
+            tr(data-name="product-category_edit")
+                td Chinh sua 
+                each item in records  
+                    td(class="text-center")
+                        input(type="checkbox")
+                
+            tr(data-name="product-category_delete")
+                td Xoa
+                each item in records   
+                    td(class="text-center")
+                        input(type="checkbox") 
+
+            tr 
+                td(colspan="4")
+                    b Danh sach san pham 
+            tr(data-name="product_views")
+                td Xem
+                each item in records  
+                    td(class="text-center")
+                        input(type="checkbox")
+            tr(data-name="product_create")
+                td Them moi 
+                each item in records  
+                    td(class="text-center")
+                        input(type="checkbox")
+            
+            tr(data-name="product_edit")
+                td Chinh sua 
+                each item in records  
+                    td(class="text-center")
+                        input(type="checkbox")
+                
+            tr(data-name="productdelete")
+                td Xoa
+                each item in records   
+                    td(class="text-center")
+                        input(type="checkbox") 
+        
+    form(
+        id="form-change-permissons"
+        method="POST"
+        action=`${prefixAdmin}/roles/permissions?_method=PATCH`
+    )
+        div(class="form-group")
+            input(
+                type="text"
+                class="form-control"
+                name="permissions"
+            )      
+    script(src="/admin/js/roles.js") 

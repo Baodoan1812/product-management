@@ -20,4 +20,6 @@ router.patch("/edit/:id",
     uploadCloud.uploadCloud,
     validate.createItem,
     controller.editPatch)
+router.get("/permissions",controller.permission)
+router.patch("/permissions",controller.permissionPatch)
 module.exports = router;
