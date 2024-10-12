@@ -21,11 +21,11 @@ block main
                         th 
                             input(type="checkbox" name="checkall")  
                         th STT 
-                        th Hinh anh 
-                        th Ho ten 
-                        th Quyen
-                        th Trang thai 
-                        th Hanh dong
+                        th Hình ảnh 
+                        th Họ tên 
+                        th Quyền
+                        th Trạng thái
+                        th Hành động
                       
                 
                 tbody  
@@ -53,7 +53,7 @@ block main
                                         data-status=item.status
                                         data-id=item.id
                                         class="badge badge-success"
-                                    )   Hoat Dong
+                                    )   Hoạt động
                                         
                                 else 
                                     a(
@@ -62,20 +62,20 @@ block main
                                         data-status=item.status
                                         data-id=item.id
                                         class="badge badge-danger"
-                                        ) Dung hoat dong
+                                        ) Dừng hoạt động
                             td  
                                 a(
                                     href=`${prefixAdmin}/accounts/detail/${item.id}`
                                     class="btn btn-secondary btn-sm"
                                     edit-button
-                                    ) Chi tiet 
+                                    ) Chi tiết 
                                 a(
                                     href=`${prefixAdmin}/accounts/edit/${item.id}`
                                     class="btn btn-warning btn-sm ml-1"
                                     edit-button
-                                    ) Sua 
+                                    ) Sửa
                                 button(
                                     class="btn btn-danger btn-sm ml-1"
                                     delete-button 
                                     data-id=item.id
-                                    ) Xoa
+                                    ) Xóa

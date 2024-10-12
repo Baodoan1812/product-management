@@ -23,9 +23,9 @@ block main
                         th 
                             input(type="checkbox" name="checkall")  
                         th STT 
-                        th Tieu de 
-                        th Mo ta
-                        th Hanh dong
+                        th Tiêu đề 
+                        th Mô tả
+                        th Hành động
                       
                 
                 tbody 
@@ -40,16 +40,16 @@ block main
                                 a(
                                     href=`${prefixAdmin}/roles/detail/${item.id}`
                                     class="btn btn-secondary btn-sm"
-                                    ) Chi tiet 
+                                    ) Chi tiết 
                                 a(
                                     href=`${prefixAdmin}/roles/edit/${item.id}`
                                     class="btn btn-warning btn-sm ml-1"
-                                    ) Sua 
+                                    ) Sửa 
                                 button(
                                     class="btn btn-danger btn-sm ml-1"
                                     delete-button 
                                     data-id=item.id
-                                    ) Xoa
+                                    ) Xóa
     form(
         action=""
         method="POST"

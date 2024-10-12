@@ -1,6 +1,7 @@
 const mongoose= require("mongoose");
 const Product = require("../../models/products.model");
 const ProductCategory = require("../../models/category-product.model");
+const Account=require("../../models/accounts.model");
 const { query } = require("express");
 const createTreeHelper= require("../../helpers/createTree");
 const filterStatusHelper=require("../../helpers/filter-status");
@@ -48,7 +49,14 @@ module.exports.index= async (req, res) => {
     const products = await Product.find(find).limit(objectPagination.limitItem).skip(objectPagination.skipIndex)
     .sort(sort);
     
-    
+    for (const item of products) {
+        const user= await Account.findOne({
+            _id:item.createdBy.account_id
+        })
+        if(user){
+            item.fullName=user.fullName
+        }
+    } 
     res.render("./admin/pages/products/products.pug",{
         pageTitle:"Trang san pham",
         products: products,
@@ -96,7 +104,13 @@ module.exports.changeMulti=async (req,res)=>{
 //delete item
 module.exports.deleteItem= async (req,res)=>{
     const id=req.params.id;
-    await Product.updateOne({_id:id},{deleted:true});
+    await Product.updateOne({_id:id},{deleted:true,
+        deletedBy:{
+            account_id: res.locals.user.id,
+            deletedAt:new Date()
+        }
+    
+});
     req.flash('success', 'Xoa thanh cong');
     res.redirect("back");
 }
@@ -125,7 +139,9 @@ module.exports.createItem= async(req,res)=>{
     else{
         req.body.position=parseInt(req.body.position);
     }
-   
+    req.body.createdBy={
+        account_id:res.locals.user.id
+    }
     const product=new Product(req.body);
     await product.save();
     res.redirect("/admin/products")
@@ -161,8 +177,16 @@ module.exports.editPatch=async(req,res)=>{
     req.body.stock=parseInt(req.body.stock);
     req.body.position=parseInt(req.body.position);
     
-   
-    await Product.updateOne({_id:id},req.body);
+    const updatedBy = {
+            account_id:res.locals.user.id,
+            updatedAt: new Date()
+    }
+    
+    await Product.updateOne({_id:id},
+        {
+            ...req.body,
+            $push: { updatedBy:updatedBy }
+        });
     res.redirect("/admin/products")
 }
 module.exports.detail=async(req,res)=>{
