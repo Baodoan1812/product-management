@@ -30,6 +30,11 @@ module.exports.create= async (req,res)=>{
     });
 }
 module.exports.createPost= async (req,res)=>{
+    const permissions= res.locals.role.permission;
+    if(!permissions.includes("product-category_create")){
+        res.send("403");
+        return;
+    }
     if(req.body.position=="")
         {
             const count=await ProductCategory.countDocuments();
@@ -38,8 +43,8 @@ module.exports.createPost= async (req,res)=>{
         else{
             req.body.position=parseInt(req.body.position);
         }
-    const records=new ProductCategory(req.body);
-    await records.save();
+    // const records=new ProductCategory(req.body);
+    // await records.save();
     res.redirect("/admin/product-category")
     
 }
