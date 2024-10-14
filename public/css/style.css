@@ -115,6 +115,9 @@
     padding: 10px;
     border-bottom:1px solid #ddd;
 }
+.sub-menu ul li{
+    position: relative;
+}
 .sub-menu:hover > ul{
     display: block;
 }

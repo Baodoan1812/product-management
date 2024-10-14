@@ -1,4 +1,5 @@
 const Product=require("../../models/products.model")
+const ProductCategory= require("../../models/category-product.model");
 const newPriceProduct= require("../../helpers/product");
 
 module.exports.product = async (req,res)=>{
@@ -7,7 +8,7 @@ module.exports.product = async (req,res)=>{
         deleted:"false"
     });
     const newProducts=  newPriceProduct.newPrice(products);
-    res.render("./client/pages/products/index",{
+    res.render("client/pages/products/index",{
         pageTitle: "Trang danh sach san pham",
         products: products,
         newProducts: newProducts
@@ -15,15 +16,15 @@ module.exports.product = async (req,res)=>{
 }
 
 module.exports.detail= async(req,res)=>{
-        const slug=req.params.slug;
+        const slugProduct=req.params.slugProduct;
         let find={
             deleted:false,
-            slug:slug
+            slug:slugProduct
         }
         const product= await Product.findOne(find);
         if(product)
         {
-            res.render("./client/pages/products/detail",{
+            res.render("client/pages/products/detail",{
                 pageTitle:"Trang chi tiet",
                 product:product
             })
@@ -32,4 +33,39 @@ module.exports.detail= async(req,res)=>{
             res.redirect("/products");
         }
  
+}
+module.exports.categoryProduct= async (req,res)=>{
+   
+    const Category= await ProductCategory.findOne({
+        deleted:false,
+        slug:req.params.slugCategory
+    })
+    const getSubCategory= async(parentId)=>{
+        const subs=await ProductCategory.find({
+            parent_id:parentId,
+            deleted:false,
+            status:"active"
+        });
+        let allSub=[...subs];
+        for(const sub of subs){
+            const childs= await getSubCategory(sub.id);
+            allSub=allSub.concat(childs);
+        }
+        return allSub;
+    }
+    
+    if(Category){
+        const list= await getSubCategory(Category.id)
+        const newlist = list.map(item =>  item.id)
+        const products= await Product.find({
+            deleted:false,
+            parent_product_id : { $in:[Category.id,...newlist] }
+        }).sort({position:"desc"})
+        
+        const newProducts=  newPriceProduct.newPrice(products);
+        res.render("client/pages/products/index",{
+            pageTitle: Category.title,
+            newProducts: newProducts
+        })
+    }
 }
