@@ -1,34 +1,56 @@
 extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
 
-block main 
-    if(product.title)
-        h1(class="mb-4") #{product.title}
-    if(product.price)
-        div(class="mb-4") Gia: <b> #{product.price}$</b>
-    
-    if(product.discountPercentage)
-        div(class="mb-4") Giam gia: <b> #{product.discountPercentage}</b>
+block main
+    .product-detail 
+        .container.my-5 
+            .row 
+                .col-6 
+                    .inner-thumb 
+                        img(src=product.thumbnail,alt=product.title)
+                .col-6
+                    if(product.title) 
+                        h1(class="inner-title") #{product.title}
+   
+        
+                    if(product.parent)
+                        div(class="inner-category") Danh mục cha:<b> #{product.parent.title}</b>
+                    if(product.price)
+                        div(class="inner-price-old") <b> #{product.price}$</b>
+                    
+                    if(product.discountPercentage)
+                        div(class="inner-percent") Giảm tới <span><b> #{product.discountPercentage}%</b></span>
+                    if(product.priceNew)
+                        div(class="inner-price-new") Giá chỉ còn <b> #{product.priceNew}$</b>
+                    if(product.stock)
+                        div(class="inner-stock") Còn lại <span> #{product.stock}</span> sản phẩm
 
-    if(product.stock)
-        div(class="mb-4") Con lai: <b> #{product.stock}</b>
+                
+                    form(
+                        action=`/cart/add/${product.id}`
+                        method="POST"
+                    )
+                        input(
+                            class="form-control mb-2"
+                            type="number"
+                            name="quantity"
+                            value="1"
+                            min="1"
+                            max=product.stock
+                        ) 
+                        button(
+                            type="submit"
+                            class="btn btn-success btn-block"
+                        ) Thêm vào giỏ hàng
+        hr 
 
-    if(product.thumbnail)
-        div(class="mb-4")
-            img(src=product.thumbnail
-                style="width: 100px")
-    
-    if(product.status)
-        div(class="mb-4")
-            span Trang thai: 
-            if(product.status=="active")
-                span(class="badge badge-success") Hoat dong 
-            else   
-                span(class="badge badge-danger") Dung hoat dong 
-    if(product.position)
-        div(class="mb-4") Vi tri: <b> #{product.position}</b>
-    if(product.description)
-        div(class="mb-4") !{product.description}
-    
+        .container.my-5
+            .row   
+                .col-12
+                    +box-head("Mô tả sản phẩm")
+                    if(product.description)
+                        .inner-desc !{product.description}
+
 
 
 

@@ -15,6 +15,7 @@ module.exports.index= async (req, res) => {
     }
     //filterStatus
     const filterStatus=filterStatusHelper(req.query);
+    
     if(req.query.status)
     {
         find.status= req.query.status;

@@ -24,9 +24,19 @@ module.exports.detail= async(req,res)=>{
         const product= await Product.findOne(find);
         if(product)
         {
+            const newProduct= newPriceProduct.newPriceOne(product);
+            if(product.parent_product_id){
+                const productParent= await ProductCategory.findOne({
+                    _id:product.parent_product_id,
+                    deleted:false,
+                    status:"active"
+                })
+                newProduct.parent= productParent;
+            }
+            
             res.render("client/pages/products/detail",{
                 pageTitle:"Trang chi tiet",
-                product:product
+                product:newProduct
             })
         }
         else{

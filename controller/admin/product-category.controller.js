@@ -3,16 +3,31 @@ const ProductCategory = require("../../models/category-product.model");
 const { query } = require("express");
 const createTreeHelper= require("../../helpers/createTree");
 const systemConfig = require("../../config/system");
+const filterStatusHelper= require("../../helpers/filter-status");
+const searchHelper= require("../../helpers/search");
+
 module.exports.index= async(req,res)=>{
     let find={
         deleted:false
     }
-    
+    //filter
+    const filterStatus= filterStatusHelper(req.query);
+    if(req.query.status)
+        {
+            find.status= req.query.status;
+        }
+    // search
+    const object=searchHelper(req.query);
+    let keyword=object.keyword;
+    if(object.regex)
+    find.title=object.regex;
+    // console.log(object);
     const records= await ProductCategory.find(find);
     const newRecords=createTreeHelper.treeCreate(records);
     res.render("./admin/pages/category-product/index",{
         pageTitle:"Trang danh mục sản phẩm",
-        records:newRecords
+        records:newRecords,
+        filterStatus:filterStatus
     });
 
 }

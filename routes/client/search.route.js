@@ -1,9 +1,7 @@
 const express= require("express");
 const router = express.Router();
-const categoryMiddleware= require("../../middlewares/client/category.middleware");
 const cartMiddleware= require("../../middlewares/client/cart.middleware");
-
-const controller = require("../../controller/client/home.controller")
+const controller = require("../../controller/client/search.controller")
 router.get("/",cartMiddleware.cart,controller.index)
 
 module.exports = router;
