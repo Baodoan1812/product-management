@@ -3,9 +3,9 @@ module.exports.cart= async (req,res,next)=>{
     if(!req.cookies.cartId){
         const cart= new Cart();
         await cart.save();
-        const expriresCookie= 365 * 24 *60 * 60 *1000
+        const expiresCookie= 365 * 24 *60 * 60 *1000
         res.cookie("cartId",cart.id,{
-            exprires:new Date(Date.now() +expriresCookie)
+            expires:new Date(Date.now() +expiresCookie)
         })
     }
     else{
