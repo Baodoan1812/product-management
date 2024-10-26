@@ -32,9 +32,8 @@ const route=require("./routes/client/index.route")
 const routeAdmin =require("./routes/admin/index.route")
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'pug');
-routeAdmin(app);
 route(app)
-
+routeAdmin(app);
 app.listen(port, () => {
   console.log(`app listening on port ${port}`)
 })
