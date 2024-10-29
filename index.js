@@ -34,9 +34,9 @@ app.set('views', `${__dirname}/views`);
 app.set('view engine', 'pug');
 route(app)
 routeAdmin(app);
-// app.get("*",(req,res)=>{
-//   res.render("client/pages/errors/404")
-// })
+app.get("*",(req,res)=>{
+  res.render("client/pages/errors/404")
+})
 app.listen(port, () => {
   console.log(`app listening on port ${port}`)
 })
