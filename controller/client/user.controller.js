@@ -112,3 +112,28 @@ module.exports.delete= async(req,res)=>{
     await User.updateOne({_id:id},{deleted:true})
     res.redirect('back');
 }
+module.exports.update= async(req,res)=>{
+    const tokenUser= req.cookies.tokenUser;
+    const user= await User.findOne({tokenUser:tokenUser});
+
+    res.render("./client/pages/user/update",{
+        user:user
+    })
+}
+module.exports.updatePatch= async(req,res)=>{
+    const id= req.params.id;
+    if(!req.body.password){
+        delete req.body.password;
+    }
+    else{
+        req.body.password= md5(req.body.password);
+    }
+    
+    const emailExist= await User.findOne({_id:{ $ne:req.params.id},email:req.body.email})
+    if(emailExist){
+        delete req.body.email;
+    }
+    await User.updateOne({_id:req.params.id},req.body)
+
+    res.redirect('back');
+}

@@ -63,12 +63,12 @@ block main
                                         ) Dừng hoạt động
                             td  
                                 a(
-                                    href=`user/info`
+                                    href=`${prefixAdmin}/users/info/${item.id}`
                                     class="btn btn-secondary btn-sm"
                                     edit-button
                                     ) Chi tiết 
                                 a(
-                                    href=`${prefixAdmin}/accounts/edit/${item.id}`
+                                    href=`${prefixAdmin}/users/edit/${item.id}`
                                     class="btn btn-warning btn-sm ml-1"
                                     edit-button
                                     ) Sửa
