@@ -9,7 +9,6 @@ const searchHelper=require("../../helpers/search");
 const paginationHelper=require("../../helpers/pagination");
 // Filterstatus Search Pagination
 module.exports.index= async (req, res) => {
-    
     let find={
         deleted:"false"
     }

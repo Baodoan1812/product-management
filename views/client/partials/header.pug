@@ -1,5 +1,5 @@
 include ../mixins/table-tree.pug
-header.header  
+header.header 
     .container 
         .row.algin-items-center 
             .col-3  
@@ -39,6 +39,8 @@ header.header
                             li  
                                 a(href="/user/login")  Đăng nhập 
                         else 
+                            li  
+                                a(href="/user/info")  #{user.fullName}
                             li  
                                 a(href="/user/logout")  Đăng xuất
                             

@@ -1,5 +1,6 @@
 const User= require("../../models/user.model")
 const md5= require("md5");
+const Cart= require("../../models/cart.model")
 const generateHelper= require("../../helpers/generate");
 const ForgotPassword = require("../../models/password-forgot.model");
 const sendOtpHelper= require("../../helpers/sendOtpEmail");
@@ -14,12 +15,22 @@ module.exports.loginPost= async(req,res)=>{
     if(!user){
         req.flash('error','Tai khoan khong hop le');
         res.redirect('back');
-        return;
-        
+        return; 
     }
-
     res.cookie('tokenUser',user.tokenUser);
+    console.log(req.cookies.cartId);
+    console.log(user.id);
+    const cart= await Cart.findOne({user_id:user.id});
+    
+
+    if(cart){
+        res.cookie("cartId",cart.id);
+    }
+    else{
+        await Cart.updateOne({_id:req.cookies.cartId},{user_id:user.id});
+    }
     res.redirect('/');
+    
 }
 module.exports.register= async (req,res)=>{
     res.render("./client/pages/user/register")
@@ -37,10 +48,12 @@ module.exports.registerPost= async (req,res)=>{
     const user= new User(req.body);
     await user.save();
     res.cookie("tokenUser",user.tokenUser);
+    await Cart.updateOne({_id:req.cookies.cartId},{user_id:user.id});
     res.redirect("/");
 }
 module.exports.logout=async (req,res)=>{
     res.clearCookie("tokenUser");
+    res.clearCookie("cartId");
     res.redirect("/user/login");
 }
 module.exports.forgot= async(req,res)=>{
@@ -90,4 +103,12 @@ module.exports.reset= async(req,res)=>{
     const user= await User.findOne({tokenUser:tokenUser});
     await User.updateOne({tokenUser:tokenUser},{password:password});
     res.redirect("/");
+}
+module.exports.info=async(req,res)=>{
+    res.render("./client/pages/user/info");
+}
+module.exports.delete= async(req,res)=>{
+    const id= req.params.idUser;
+    await User.updateOne({_id:id},{deleted:true})
+    res.redirect('back');
 }

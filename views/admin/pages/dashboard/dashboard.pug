@@ -2,4 +2,43 @@ extends ../../layouts/default.pug
 
 block main 
     h1 Trang tổng quan
-    div #{role.permission}
+    .row.mt-4 
+        .col-12 
+            .card.mb-4 
+                .card-header Thông tin tài khoản 
+                .card-body 
+                    if(user.avatar)
+                        img(src=user.avatar width="150px" class="mb-3")
+                    if(user.fullName)
+                        p Họ tên: <b> #{user.fullName}</b>
+                    if(user.mail)
+                        p Email: <b> #{user.email}</b>
+                    if(user.phone)
+                        p Phone: <b> #{user.phone}</b>
+                    p
+                        span Trạng thái: 
+                        span 
+                        <b> #{user.status==="active" ? "Hoạt động":"Dừng hoạt động" } </b>
+                    if(role.title)
+                        p Phân quyền: <b> #{role.title} </b>
+        .col-6 
+            .card.mb-4 
+                .card-header Danh mục sản phẩm
+                .card-body 
+                    p Số lượng: <b>#{object.category.total}</b>
+                    p Hoạt động: <b>#{object.category.active}</b>
+                    p Dừng hoạt dộng: <b>#{object.category.inactive}</b>
+        .col-6 
+            .card.mb-4 
+                .card-header Sản phẩm
+                .card-body 
+                    p Số lượng: <b>#{object.product.total}</b>
+                    p Hoạt động: <b>#{object.product.active}</b>
+                    p Dừng hoạt dộng: <b>#{object.product.inactive}</b>
+        .col-6 
+            .card.mb-4 
+                .card-header Tài khoản
+                .card-body 
+                    p Số lượng: <b>#{object.account.total}</b>
+                    p Hoạt động: <b>#{object.account.active}</b>
+                    p Dừng hoạt dộng: <b>#{object.account.inactive}</b>          
