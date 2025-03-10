@@ -7,7 +7,7 @@ block main
     .container.my-5 
         .row.justify-content-center 
             .col-8 
-                h1(class="text-center") Dang nhap 
+                h1(class="text-center") Đăng nhập
                 form(
                     action=`${prefixAdmin}/auth/login`
                     method="POST"
@@ -22,7 +22,7 @@ block main
                             required 
                         )
                     div(class="form-group")
-                        label(for="password") Mat khau
+                        label(for="password") Mật khẩu
                         input(
                             type="password"
                             class="form-control"
@@ -33,4 +33,4 @@ block main
                     button(
                         type="submit"
                         class=" form-control btn btn-primary"
-                    )  Dang nhap
+                    )  Đăng nhập

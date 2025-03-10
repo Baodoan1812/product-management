@@ -26,7 +26,7 @@ block main
                 value=record.email
             )
         div(class="form-group")
-            label(for="password") Mat Khau
+            label(for="password") Mật khẩu
             input(
                 type="password"
                 class="form-control"
@@ -35,7 +35,7 @@ block main
                 value=""
             )
         div(class="form-group")
-            label(for="phone") So dien thoai
+            label(for="phone") Số điện thoại
             input(
             type="text"
             class="form-control"
@@ -66,7 +66,7 @@ block main
         div(class="form-group")
             label(for="role_id") Phan quyen 
             select(name="role_id" id="role_id" class="form-control")
-                option(disabled) --Chon--
+                option(disabled) --Chọn--
                 each item in roles 
                     option(value=`${item.id}` selected=`${record.role_id==item.id?true:false}`) #{item.title}
 
@@ -79,7 +79,7 @@ block main
                 value="active"
                 checked=(record.status==="active")?true:false
             )
-            label(for="statusActive" class="form-check-label") Dang hoat dong
+            label(for="statusActive" class="form-check-label") Đang hoạt động
         div(class="form-group form-check form-check-inline")
             input(
                 type="radio"
@@ -89,10 +89,10 @@ block main
                 value="inactive"
                 checked=(record.status==="inactive")?true:false
             )
-            label(for="statusInactive" class="form-check-label") Dung hoat dong
+            label(for="statusInactive" class="form-check-label") Dừng hoạt động
         div(class="form-group")
             button(
                 type="submit"
                 class="btn btn-primary"
-            ) Cap nhat
+            ) Cập nhật
     script(src="/admin/js/product.js") 

@@ -13,9 +13,9 @@ block main
         div(class="mb-4")
             span Trang thai: 
             if(record.status=="active")
-                span(class="badge badge-success") Hoat dong 
+                span(class="badge badge-success") Hoạt động
             else   
-                span(class="badge badge-danger") Dung hoat dong 
+                span(class="badge badge-danger") Dừng hoạt động
     if(record.position)
         div(class="mb-4") Vi tri: <b> #{record.position}</b>
     if(record.description)
